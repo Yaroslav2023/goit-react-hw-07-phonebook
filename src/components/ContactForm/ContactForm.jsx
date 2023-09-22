@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import cl from './contactForm.module.css';
 import { useSelector, useDispatch } from 'react-redux';
-import { addContact } from 'redux/API/contactsApi';
+import { addContact } from '../../redux/API/contactsApi';
 import { nanoid } from 'nanoid';
-import { selectContactsItems } from 'redux/selectors';
+import { selectContactsItems } from '../../redux/selectors';
 
 const ContactForm = () => {
   const [name, setName] = useState('');

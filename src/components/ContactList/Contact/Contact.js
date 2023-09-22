@@ -1,15 +1,23 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { deleteContact } from 'redux/API/contactsApi';
+import { deleteContact } from '../../../redux/API/contactsApi';
 import { selectContacts } from 'redux/contactSlice';
 import { selectFilterContacts } from 'redux/selectors';
 import cl from './contact.module.css';
 
 const Contact = () => {
-  const { items, error } = useSelector(selectContacts);
+  const { items, isLoading, error } = useSelector(selectContacts);
   const { filter } = useSelector(selectFilterContacts);
   const dispatch = useDispatch();
 
-  const onDelete = uid => dispatch(deleteContact(uid));
+  const onDelete = id => dispatch(deleteContact(id));
+
+  if (isLoading && !error) {
+    return (
+      <div>
+        <p>Load...</p>
+      </div>
+    );
+  }
 
   if (error) {
     return (
@@ -33,12 +41,12 @@ const Contact = () => {
   return (
     <div>
       {arrayContacts.map(el => (
-        <li key={el.uid} className={cl.item}>
+        <li key={el.id} className={cl.item}>
           {el.name} {el.number}
           <button
             className={cl.btn}
             name="delete"
-            onClick={() => onDelete(el.uid)}
+            onClick={() => onDelete(el.id)}
           >
             Delete
           </button>
